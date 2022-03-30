@@ -1,0 +1,27 @@
+monday 14th feb 2022
+
+TASK ONE
+POST SECTION
+
+1. add startup image
+2. delete post
+3. edit post
+
+
+TASK TWO
+user authentication 
+entail navigating user to respective page if not authenticated
+
+
+TASK THREE
+USER FEEDBACK ON PRODUCTS (products comment section) integrate comments and like section for public consumption
+
+
+USERS LOGGED IN ABLE TO VIEW STARTUPS AND WHAT THEY OFFER,
+SERCH STARTUPS BY TYPE E.G TECH,AGRICULTURE,FASHION ETC
+
+
+AFTERNOON
+STARTUP WEBSITE DESIGN
+SOCIAL MEDIA APP FOR STARTUPS
+//----------------------------------- end of 14th feb assignment -----------------------------------
