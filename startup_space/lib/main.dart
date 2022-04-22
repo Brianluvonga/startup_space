@@ -1,11 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:startup_space/components/notifier/startup/startup_notifier.dart';
+import 'package:startup_space/pages/get_started.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_auth_notifier.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_notifier.dart';
 import 'package:startup_space/components/notifier/user/auth_notifier.dart';
-import 'package:startup_space/pages/startup/profile/profile_page.dart';
-import 'package:startup_space/pages/startup/profile/update_profile.dart';
+import 'package:startup_space/pages/individuals/google_provider/google_provider.dart';
+import 'package:startup_space/pages/welcome.dart';
 import 'package:startup_space/startup/posts/post_notifier/post_notifier.dart';
 
 Future<void> main() async {
@@ -24,12 +25,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthNotifier()),
         ChangeNotifierProvider(create: (_) => StartupNotifier()),
         ChangeNotifierProvider(create: (_) => StartupPostNotifier()),
+        ChangeNotifierProvider(create: (_) => StartupAuthNotifier()),
+        ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: UpdateStartupDetails(
-          isUploading: false,
-        ),
+        home: GetStarted(),
       ),
     );
   }

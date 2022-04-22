@@ -16,7 +16,7 @@ class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
   final List<Widget> _classNavOptions = [
     const GetStarted(),
-    const StartupFeed(),
+    // const StartupFeed(),
     const PostsByStartups(),
     const Notifications()
   ];
@@ -39,10 +39,10 @@ class _NavigationState extends State<Navigation> {
             icon: Icon(Icons.home),
             title: Text('Home'),
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('StartUps'),
-          ),
+          // const BottomNavigationBarItem(
+          //   icon: Icon(Icons.business),
+          //   title: Text('StartUps'),
+          // ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.outbond_outlined),
             title: Text('Startup Posts'),
@@ -55,7 +55,7 @@ class _NavigationState extends State<Navigation> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.lightBlueAccent,
+        selectedItemColor: Colors.pink,
         onTap: _onItemTapped,
       ),
     );

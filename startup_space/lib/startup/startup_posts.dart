@@ -75,9 +75,9 @@ class _PostsByStartupsState extends State<PostsByStartups> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Startup Posts"),
+        title: const Text("Posts", style: TextStyle(color: Colors.pink)),
         centerTitle: true,
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
         onRefresh: _refreshList,
@@ -256,8 +256,8 @@ class _PostsByStartupsState extends State<PostsByStartups> {
           );
         },
         child: const Icon(Icons.add_to_photos_rounded),
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.lightBlueAccent[100],
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.pink[400],
       ),
     );
   }

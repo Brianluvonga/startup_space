@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:startup_space/components/api/user/user_api.dart';
-import 'package:startup_space/components/models/consumer/user_model.dart';
-import 'package:startup_space/components/notifier/user/auth_notifier.dart';
-import 'package:startup_space/pages/individuals/register.dart';
-import 'package:startup_space/pages/individuals/user_details.dart';
+
+import 'package:startup_space/components/models/startup/startup_registration_model.dart';
+
+import 'package:startup_space/pages/startup/account/api/startup_api.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_auth_notifier.dart';
 import 'package:startup_space/pages/startup/account/register_startup.dart';
+import 'package:startup_space/pages/startup/profile/startup_details.dart';
 
 class StartupLogin extends StatefulWidget {
   const StartupLogin({Key? key}) : super(key: key);
@@ -20,13 +21,13 @@ class _StartupLoginState extends State<StartupLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // ignore: prefer_final_fields
-  UserModel _user = UserModel();
+  StartupRegistrationModel _user = StartupRegistrationModel();
 
   @override
   void initState() {
-    AuthNotifier authNotifier =
-        Provider.of<AuthNotifier>(context, listen: false);
-    initializeCurrentUser(authNotifier);
+    StartupAuthNotifier authNotifier =
+        Provider.of<StartupAuthNotifier>(context, listen: false);
+    initializeCurrentStartup(authNotifier);
     super.initState();
   }
 
@@ -37,14 +38,14 @@ class _StartupLoginState extends State<StartupLogin> {
 
     _formKey.currentState!.save();
 
-    AuthNotifier authNotifier =
-        Provider.of<AuthNotifier>(context, listen: false);
+    StartupAuthNotifier authNotifier =
+        Provider.of<StartupAuthNotifier>(context, listen: false);
 
-    signIn(_user, authNotifier);
+    signInStartup(_user, authNotifier);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => UserDetails(),
+        builder: (context) => HomePage(),
       ),
     );
   }
@@ -69,7 +70,7 @@ class _StartupLoginState extends State<StartupLogin> {
                   padding: const EdgeInsets.fromLTRB(32, 96, 32, 0),
                   child: Column(
                     children: [
-                      userEmail(),
+                      startupEmail(),
                       const SizedBox(height: 10),
                       password(),
                       const SizedBox(height: 30),
@@ -102,7 +103,7 @@ class _StartupLoginState extends State<StartupLogin> {
     );
   }
 
-  Widget userEmail() {
+  Widget startupEmail() {
     return TextFormField(
       decoration: const InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -132,7 +133,7 @@ class _StartupLoginState extends State<StartupLogin> {
         return null;
       },
       onSaved: (String? value) {
-        _user.email = value;
+        _user.emailAddress = value;
       },
     );
   }
@@ -177,9 +178,7 @@ class _StartupLoginState extends State<StartupLogin> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const RegisterStartup(
-              isUploading: false,
-            ),
+            builder: (context) => const RegisterStartup(),
           ),
         );
       },
@@ -189,18 +188,18 @@ class _StartupLoginState extends State<StartupLogin> {
         alignment: Alignment.bottomCenter,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
+          children: <Widget>[
+            const Text(
               'Don\'t have an account ?',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Text(
               'Register',
               style: TextStyle(
-                  color: Colors.lightBlueAccent,
+                  color: Colors.pink[400],
                   fontSize: 15,
                   fontWeight: FontWeight.w800),
             ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:startup_space/components/models/startup/startup_model.dart';
-import 'package:startup_space/components/notifier/startup/startup_notifier.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_notifier.dart';
 
 // enum ImageSource {
 //   /// Opens up the device camera, letting the user to take a new picture.
@@ -45,8 +45,8 @@ class _UpdateStartupDetailsState extends State<UpdateStartupDetails> {
         child: Ink.image(
           image: image,
           fit: BoxFit.cover,
-          width: 128,
-          height: 128,
+          width: 100,
+          height: 100,
           // child: InkWell(onTap: onClicked),
         ),
       ),
@@ -308,7 +308,7 @@ class _UpdateStartupDetailsState extends State<UpdateStartupDetails> {
   _onStartupUploaded(StartupModel? startup) {
     StartupNotifier startupNotifier =
         Provider.of<StartupNotifier>(context, listen: false);
-    startupNotifier.addStartup(startup!);
+    // startupNotifier.addStartup(startup!);
     Navigator.pop(context);
   }
 
@@ -377,7 +377,7 @@ class _UpdateStartupDetailsState extends State<UpdateStartupDetails> {
               // ignore: prefer_const_literals_to_create_immutables
               children: <Widget>[
                 // InkWell()
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 45,
                   backgroundImage: NetworkImage(
                     'https://www.testingxperts.com/wp-content/uploads/2019/02/placeholder-img.jpg',
@@ -506,7 +506,7 @@ class _UpdateStartupDetailsState extends State<UpdateStartupDetails> {
                                   Row(
                                     children: <Widget>[
                                       telephone(),
-                                      SizedBox(width: 10),
+                                      const SizedBox(width: 10),
                                       location()
                                     ],
                                   ),

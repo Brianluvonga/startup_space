@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:startup_space/components/notifier/startup/startup_notifier.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_notifier.dart';
 
 class StartUpDetails extends StatefulWidget {
   const StartUpDetails({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _StartUpDetailsState extends State<StartUpDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(startupNotifier.currentStartup.startupname.toString()),
+        title: Text(startupNotifier.currentStartup.name.toString()),
         centerTitle: true,
         backgroundColor: Colors.lightBlueAccent[200],
       ),
@@ -42,7 +42,7 @@ class _StartUpDetailsState extends State<StartUpDetails> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Row(children: <Widget>[detailsContainerFeed()]),
+                      // Row(children: <Widget>[detailsContainerFeed()]),
                     ],
                   ),
                 ),
@@ -91,25 +91,25 @@ class _StartUpDetailsState extends State<StartUpDetails> {
   //   );
   // }
 
-  Widget detailsContainerFeed() {
-    StartupNotifier startupNotifier = Provider.of<StartupNotifier>(context);
+  // Widget detailsContainerFeed() {
+  //   StartupNotifier startupNotifier = Provider.of<StartupNotifier>(context);
 
-    return SizedBox(
-      width: 350,
-      height: 200,
-      child: Card(
-        elevation: 8.0,
-        shadowColor: Colors.blue,
-        child: Center(
-          child: ListTile(
-            title: Text(startupNotifier.currentStartup.description.toString()),
-            // subtitle: Text(startupNotifier.currentStartup.category.toString()),
-            leading:
-                Text(startupNotifier.currentStartup.startupname.toString()),
-            trailing: Text(startupNotifier.currentStartup.category.toString()),
-          ),
-        ),
-      ),
-    );
-  }
+  //   return SizedBox(
+  //     width: 350,
+  //     height: 200,
+  //     child: Card(
+  //       elevation: 8.0,
+  //       shadowColor: Colors.blue,
+  //       child: Center(
+  //         child: ListTile(
+  //           title: Text(startupNotifier.currentStartup.description.toString()),
+  //           // subtitle: Text(startupNotifier.currentStartup.category.toString()),
+  //           leading:
+  //               Text(startupNotifier.currentStartup.startupname.toString()),
+  //           trailing: Text(startupNotifier.currentStartup.category.toString()),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

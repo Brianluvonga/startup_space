@@ -8,4 +8,21 @@ class StartupRegistrationModel {
   Timestamp? createdAt;
 
   StartupRegistrationModel();
+  // constructor
+  StartupRegistrationModel.fromMap(Map<String, dynamic> startup) {
+    id = startup['id'];
+    name = startup['name'];
+    emailAddress = startup['emailAddress'];
+    password = startup['password'];
+    createdAt = startup['createdAt'];
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'emailAddress': emailAddress,
+      'password': password,
+      'createdAt': createdAt!.toDate(),
+    };
+  }
 }

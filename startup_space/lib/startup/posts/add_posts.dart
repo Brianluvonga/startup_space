@@ -189,7 +189,7 @@ class _StartupPostsState extends State<StartupPosts> {
       appBar: AppBar(
           title: const Text("Startup Posts"),
           centerTitle: true,
-          backgroundColor: Colors.blueAccent),
+          backgroundColor: Colors.white),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

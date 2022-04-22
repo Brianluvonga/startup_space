@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:startup_space/components/models/startup/startup_registration_model.dart';
-import 'package:startup_space/components/notifier/startup/startup_notifier.dart';
+import 'package:startup_space/pages/startup/account/api/startup_api.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_auth_notifier.dart';
+import 'package:startup_space/pages/startup/account/notifier/startup_notifier.dart';
 import 'package:startup_space/pages/startup/account/login_startup.dart';
 
 class RegisterStartup extends StatefulWidget {
-  final bool isUploading;
-  const RegisterStartup({Key? key, required this.isUploading})
-      : super(key: key);
+  const RegisterStartup({Key? key}) : super(key: key);
 
   @override
   _RegisterStartupState createState() => _RegisterStartupState();
@@ -15,7 +15,7 @@ class RegisterStartup extends StatefulWidget {
 
 class _RegisterStartupState extends State<RegisterStartup> {
   TextEditingController businessCategoryController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -23,9 +23,9 @@ class _RegisterStartupState extends State<RegisterStartup> {
 
   @override
   void initState() {
-    StartupNotifier startupNotifier =
-        Provider.of<StartupNotifier>(context, listen: false);
-    // getStartups(startupNotifier);
+    StartupAuthNotifier startupNotifier =
+        Provider.of<StartupAuthNotifier>(context, listen: false);
+    initializeCurrentStartup(startupNotifier);
     super.initState();
   }
 
@@ -160,12 +160,12 @@ class _RegisterStartupState extends State<RegisterStartup> {
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 20),
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.all(15),
         alignment: Alignment.bottomCenter,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
+          children: <Widget>[
+            const Text(
               'Already have an account ?',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
@@ -175,7 +175,7 @@ class _RegisterStartupState extends State<RegisterStartup> {
             Text(
               'Login',
               style: TextStyle(
-                  color: Colors.lightBlueAccent,
+                  color: Colors.pink[400],
                   fontSize: 15,
                   fontWeight: FontWeight.w800),
             ),
@@ -185,19 +185,20 @@ class _RegisterStartupState extends State<RegisterStartup> {
     );
   }
 
-  // _onStartupUploaded(StartupRegistrationModel? startup) {
-  //   StartupNotifier startupNotifier =
-  //       Provider.of<StartupNotifier>(context, listen: false);
-  //   startupNotifier.addStartup(startup);
-  //   Navigator.pop(context);
-  // }
-
   Future<void> saveStartup() async {
     if (!_formKey.currentState!.validate()) {
       return;
     } else {
       _formKey.currentState!.save();
-      // uploadStartup(_startup, widget.isUploading, _onStartupUploaded);
+      StartupAuthNotifier startupNotifier =
+          Provider.of<StartupAuthNotifier>(context, listen: false);
+      signupStartup(_startup, startupNotifier);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const StartupLogin(),
+        ),
+      );
     }
   }
 
@@ -207,7 +208,7 @@ class _RegisterStartupState extends State<RegisterStartup> {
       appBar: AppBar(
         title: const Text("Startup Registration"),
         centerTitle: true,
-        backgroundColor: Colors.lightBlueAccent[200],
+        backgroundColor: Colors.pink[400],
       ),
       body: Center(
         child: Form(

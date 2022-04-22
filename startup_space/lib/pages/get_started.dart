@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:startup_space/components/feed/startup_feed.dart';
+import 'package:startup_space/components/navigation.dart';
+import 'package:startup_space/components/transition.dart';
+import 'package:startup_space/pages/individuals/google_provider/google_provider.dart';
+
+import 'package:startup_space/pages/individuals/google_sign.dart';
+import 'package:startup_space/pages/individuals/profile/profile.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({Key? key}) : super(key: key);
@@ -63,28 +72,22 @@ class _GetStartedState extends State<GetStarted> {
     );
   }
 
-  Widget getStarted() {
-    return const Text(
-      'Get Started',
-      style: TextStyle(fontSize: 30, color: Colors.white),
-    );
-  }
-
-  Widget getStartedIntroText() {
-    return const SizedBox(
-        child: Text(
-      'Boost Your Startup or Business by being visible to the outside world, let your services and what you do be known to the general public.',
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 20, color: Colors.white),
-    ));
-  }
-
   Widget getStartedImage() {
-    return Center(
-      child: Image.asset(
-        'assets/startup.png',
-        width: 400,
-      ),
+    User? user = FirebaseAuth.instance.currentUser;
+
+    return Column(
+      children: [
+        SizedBox(height: 45),
+        CircleAvatar(
+          radius: 30,
+          backgroundImage: NetworkImage(
+            user!.photoURL.toString(),
+          ),
+        ),
+        Text(user.displayName.toString()),
+        Text(user.email.toString()),
+        Text(user.emailVerified.toString()),
+      ],
     );
   }
 
@@ -114,29 +117,151 @@ class _GetStartedState extends State<GetStarted> {
         ));
   }
 
+  final bool _isLoggedIn = false;
+
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
+      // drawer: Drawer(context),
       backgroundColor: Colors.blue[300],
-      // appBar: AppBar(
-      //   title: const Text('StartUp-Space'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.blue[300],
-      // ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        // title: const Text(
+        //   'Startup Space',
+        //   style: TextStyle(color: Colors.pink),
+        // ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.account_circle, color: Colors.black),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
+        ],
+      ),
+
+      drawer: Drawer(
+        child: SizedBox(
+          child: Column(
+            children: [
+              getStartedImage(),
+              Divider(
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.account_circle,
+                  size: 30.0,
+                ),
+                title: Text('Profile'),
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (BuildContext context) {
+                  //       return Profile();
+                  //     },
+                  //   ),
+                  // );
+                },
+              ),
+              Divider(
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  size: 30.0,
+                ),
+                title: Text('Setting'),
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (BuildContext context) {
+                  //       return Profile();
+                  //     },
+                  //   ),
+                  // );
+                },
+              ),
+              Divider(
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.help,
+                  size: 30.0,
+                ),
+                title: Text('Help'),
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (BuildContext context) {
+                  //       return Profile();
+                  //     },
+                  //   ),
+                  // );
+                },
+              ),
+              Divider(
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.info_outline_rounded,
+                  size: 30.0,
+                ),
+                title: Text('About'),
+                onTap: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (BuildContext context) {
+                  //       return Profile();
+                  //     },
+                  //   ),
+                  // );
+                },
+              ),
+              Divider(
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.logout,
+                  size: 30.0,
+                ),
+                title: Text('Logout'),
+                onTap: () {
+                  final pathProvider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  pathProvider.logUserOut();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+
       body: Center(
-        child: Column(
-          // ignore: prefer_const_literals_to_create_immutables
-          children: <Widget>[
-            const SizedBox(height: 100),
-            getStarted(),
-            const SizedBox(height: 100),
-            getStartedIntroText(),
-            const SizedBox(height: 40),
-            getStartedImage(),
-            const SizedBox(height: 20),
-            startButton(),
-            const SizedBox(height: 20),
-          ],
+        child: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Colors.blue[400],
+                ),
+              );
+            } else if (snapshot.hasData) {
+              return const PageTransition();
+            } else if (snapshot.hasError) {
+              return const Center(child: Text("Error Login In"));
+            }
+            return const GoogleSign();
+          },
         ),
       ),
     );
