@@ -33,3 +33,5 @@ class PitchStartupToInvestors(models.Model):
 
 
 # ============================= END OF STARTUP MODEL SECTION ============================== #
+
+
