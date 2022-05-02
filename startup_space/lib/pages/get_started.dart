@@ -80,11 +80,11 @@ class _GetStartedState extends State<GetStarted> {
         SizedBox(height: 45),
         CircleAvatar(
           radius: 30,
-          backgroundImage: NetworkImage(
-            user!.photoURL.toString(),
-          ),
+          // backgroundImage: NetworkImage(
+          //   // user!.photoURL.toString(),
+          // ),
         ),
-        Text(user.displayName.toString()),
+        Text(user!.displayName.toString()),
         Text(user.email.toString()),
         Text(user.emailVerified.toString()),
       ],

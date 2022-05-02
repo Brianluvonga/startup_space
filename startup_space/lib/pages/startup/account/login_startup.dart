@@ -9,6 +9,7 @@ import 'package:startup_space/pages/startup/account/api/startup_api.dart';
 import 'package:startup_space/pages/startup/account/notifier/startup_auth_notifier.dart';
 import 'package:startup_space/pages/startup/account/register_startup.dart';
 import 'package:startup_space/pages/startup/profile/startup_details.dart';
+import 'package:startup_space/startup/startup_posts.dart';
 
 class StartupLogin extends StatefulWidget {
   const StartupLogin({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _StartupLoginState extends State<StartupLogin> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomePage(),
+        builder: (context) => const PostsByStartups(),
       ),
     );
   }
